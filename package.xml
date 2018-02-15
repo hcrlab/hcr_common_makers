@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<package format="2">
+<package>
   <name>hcr_common_markers</name>
   <version>0.0.0</version>
   <description>This package contains the commonly used interactive markers in HCR lab.</description>
@@ -8,7 +8,7 @@
   <!-- Example:  -->
   <!-- <maintainer email="jane.doe@example.com">Jane Doe</maintainer> -->
   <maintainer email="pengy25@cs.washington.edu">Yu-Tang Peng</maintainer>
-
+  <author email="jstn@cs.washington.edu">Justin Huang</author>
 
   <!-- One license tag required, multiple allowed, one license per tag -->
   <!-- Commonly used license strings: -->
@@ -53,14 +53,10 @@
   <build_depend>rospy</build_depend>
   <build_depend>interactive_markers</build_depend>
   <build_depend>transform_graph</build_depend>
-  <build_export_depend>roscpp</build_export_depend>
-  <build_export_depend>rospy</build_export_depend>
-  <build_export_depend>interactive_markers</build_export_depend>
-  <build_export_depend>transform_graph</build_export_depend>
-  <exec_depend>roscpp</exec_depend>
-  <exec_depend>rospy</exec_depend>
-  <exec_depend>interactive_markers</exec_depend>
-  <exec_depend>transform_graph</exec_depend>
+  <run_depend>roscpp</run_depend>
+  <run_depend>rospy</run_depend>
+  <run_depend>interactive_markers</run_depend>
+  <run_depend>transform_graph</run_depend>
 
   <!-- The export tag contains other, unspecified, tags -->
   <export>
