@@ -12,6 +12,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   transform_graph
+  visualization_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -106,11 +107,13 @@ catkin_package(
   INCLUDE_DIRS include
   LIBRARIES
     hcr_common_markers_drag_box_marker
+    hcr_common_markers_six_dof_controls
   CATKIN_DEPENDS
     interactive_markers
     roscpp
     rospy
     transform_graph
+    visualization_msgs
 )
 
 ###########
@@ -124,15 +127,18 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
-## Declare a C++ library
-# add_library(${PROJECT_NAME}
-#   src/${PROJECT_NAME}/hcr_common_markers.cpp
-# )
+## Declare C++ libraries
+add_library(hcr_common_markers_drag_box_marker src/drag_box_marker.cpp)
+add_dependencies(hcr_common_markers_drag_box_marker ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(hcr_common_markers_drag_box_marker
+  ${catkin_LIBRARIES}
+)
 
-## Add cmake target dependencies of the library
-## as an example, code may need to be generated before libraries
-## either from message generation or dynamic reconfigure
-# add_dependencies(${PROJECT_NAME} ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_library(hcr_common_markers_six_dof_controls src/six_dof_controls.cpp)
+add_dependencies(hcr_common_markers_six_dof_controls ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(hcr_common_markers_six_dof_controls
+  ${catkin_LIBRARIES}
+)
 
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
@@ -144,21 +150,6 @@ include_directories(
 ## target back to the shorter version for ease of user use
 ## e.g. "rosrun someones_pkg node" instead of "rosrun someones_pkg someones_pkg_node"
 # set_target_properties(${PROJECT_NAME}_node PROPERTIES OUTPUT_NAME node PREFIX "")
-
-## Add cmake target dependencies of the executable
-## same as for the library above
-# add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-
-## Specify libraries to link a library or executable target against
-# target_link_libraries(${PROJECT_NAME}_node
-#   ${catkin_LIBRARIES}
-# )
-
-add_library(hcr_common_markers_drag_box_marker src/drag_box_marker.cpp)
-add_dependencies(hcr_common_markers_drag_box_marker ${hcr_common_markers} ${catkin_EXPORTED_TARGETS})
-target_link_libraries(hcr_common_markers_drag_box_marker
-  ${catkin_LIBRARIES}
-)
 
 #############
 ## Install ##
@@ -177,6 +168,7 @@ target_link_libraries(hcr_common_markers_drag_box_marker
 ## Mark executables and/or libraries for installation
 install(TARGETS
   hcr_common_markers_drag_box_marker
+  hcr_common_markers_six_dof_controls
   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
