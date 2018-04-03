@@ -9,6 +9,7 @@
   <!-- <url type="website">http://wiki.ros.org/hcr_common_markers</url> -->
 
   <buildtool_depend>catkin</buildtool_depend>
+  <depend>cmake_modules</depend>
   <depend>roscpp</depend>
   <depend>rospy</depend>
   <depend>interactive_markers</depend>

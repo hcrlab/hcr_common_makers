@@ -8,6 +8,7 @@ project(hcr_common_markers)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
+  cmake_modules
   interactive_markers
   roscpp
   rospy
@@ -17,6 +18,7 @@ find_package(catkin REQUIRED COMPONENTS
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
+find_package(Eigen REQUIRED)
 
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed
@@ -106,6 +108,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES
+    hcr_common_markers_axes_marker
     hcr_common_markers_drag_box_marker
     hcr_common_markers_six_dof_controls
   CATKIN_DEPENDS
@@ -114,6 +117,8 @@ catkin_package(
     rospy
     transform_graph
     visualization_msgs
+  DEPENDS
+    Eigen
 )
 
 ###########
@@ -125,6 +130,7 @@ catkin_package(
 include_directories(
   include
   ${catkin_INCLUDE_DIRS}
+  ${Eigen_INCLUDE_DIRS}
 )
 
 ## Declare C++ libraries
@@ -137,6 +143,12 @@ target_link_libraries(hcr_common_markers_drag_box_marker
 add_library(hcr_common_markers_six_dof_controls src/six_dof_controls.cpp)
 add_dependencies(hcr_common_markers_six_dof_controls ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(hcr_common_markers_six_dof_controls
+  ${catkin_LIBRARIES}
+)
+
+add_library(hcr_common_markers_axes_marker src/axes_marker.cpp)
+add_dependencies(hcr_common_markers_axes_marker ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(hcr_common_markers_axes_marker
   ${catkin_LIBRARIES}
 )
 
@@ -167,6 +179,7 @@ target_link_libraries(hcr_common_markers_six_dof_controls
 
 ## Mark executables and/or libraries for installation
 install(TARGETS
+  hcr_common_markers_axes_marker
   hcr_common_markers_drag_box_marker
   hcr_common_markers_six_dof_controls
   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
